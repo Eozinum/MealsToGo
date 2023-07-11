@@ -1,31 +1,36 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from "react";
-import { SafeAreaView, StatusBar } from "react-native";
 import { Searchbar } from "react-native-paper";
-import { ReastaurantInfoCard } from "../components/ReastaurantInfoCard";
+import { FlatList } from "react-native";
+import { Spacer } from "../../../components/spacer/Spacer";
+import { SafeArea } from "../../../components/utility/SafeArea";
 import styled from "styled-components/native";
 
+import { RestaurantInfoCard } from "../components/ReastaurantInfoCard";
+
 const SearchContainer = styled.View`
-  padding: ${(props) => props.theme.space[2]};
-  background-color: ${(props) => props.theme.colors.bg.secondary};
-`;
-const CardsContainer = styled.View`
-  flex: 1;
-  padding-top: ${(props) => props.theme.space[2]};
-  background-color: ${(props) => props.theme.colors.bg.secondary};
+  padding: ${(props) => props.theme.space[3]};
 `;
 
-const SafeArea = styled(SafeAreaView)`
-  flex: 1;
-  ${StatusBar.currentHeight && `margin-top: ${StatusBar.currentHeight}px`};
-`;
+const RestaurantList = styled(FlatList).attrs({
+  contentContainerStyle: {
+    padding: 16,
+  },
+})``;
 
 export const RestaurantsScreen = () => (
   <SafeArea>
     <SearchContainer>
       <Searchbar />
     </SearchContainer>
-    <CardsContainer>
-      <ReastaurantInfoCard />
-    </CardsContainer>
+    <RestaurantList
+      data={[{ name: 1 }, { name: 2 }]}
+      renderItem={() => (
+        <Spacer position="bottom" size="large">
+          <RestaurantInfoCard />
+        </Spacer>
+      )}
+      keyExtractor={(item) => item.name}
+    />
   </SafeArea>
 );
